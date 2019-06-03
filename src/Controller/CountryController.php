@@ -3,6 +3,7 @@ declare( strict_types=1 );
 
 namespace App\Controller;
 
+use App\Service\CountryService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -22,8 +23,9 @@ class CountryController extends AbstractFOSRestController {
 	 * @return Response
 	 */
 	public function getCountryAction( string $countryName ): Response {
-
-		$data = [
+		$countryService = new CountryService( $countryName );
+		
+		$data           = [
 			'name'          => $countryName,
 			'nativeName'    => $countryName,
 			'currencyName'  => $countryName,
