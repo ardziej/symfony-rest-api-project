@@ -9,76 +9,88 @@ namespace App\Entity;
  */
 class Country {
 	/**
-	 * @var string
+	 * @var string|null
 	 */
 	private $name;
 	/**
-	 * @var string
+	 * @var string|null
 	 */
 	private $nativeName;
 	/**
-	 * @var string
+	 * @var string|null
 	 */
 	private $currencyName;
 	/**
-	 * @var float
+	 * @var float|null
 	 */
 	private $currencyPrice;
 
 	/**
-	 * @return string
+	 * @return string|null
 	 */
-	public function getName(): string {
+	public function getName(): ?string {
 		return $this->name;
 	}
 
 	/**
-	 * @param string $name
+	 * @param string|null $name
 	 */
-	public function setName( string $name ): void {
+	public function setName( ?string $name ): void {
 		$this->name = $name;
 	}
 
 	/**
-	 * @return string
+	 * @return string|null
 	 */
-	public function getNativeName(): string {
+	public function getNativeName(): ?string {
 		return $this->nativeName;
 	}
 
 	/**
-	 * @param string $nativeName
+	 * @param string|null $nativeName
 	 */
-	public function setNativeName( string $nativeName ): void {
+	public function setNativeName( ?string $nativeName ): void {
 		$this->nativeName = $nativeName;
 	}
 
 	/**
-	 * @return string
+	 * @return string|null
 	 */
-	public function getCurrencyName(): string {
+	public function getCurrencyName(): ?string {
 		return $this->currencyName;
 	}
 
 	/**
-	 * @param string $currencyName
+	 * @param string|null $currencyName
 	 */
-	public function setCurrencyName( string $currencyName ): void {
+	public function setCurrencyName( ?string $currencyName ): void {
 		$this->currencyName = $currencyName;
 	}
 
 	/**
-	 * @return float
+	 * @return float|null
 	 */
-	public function getCurrencyPrice(): float {
+	public function getCurrencyPrice(): ?float {
 		return $this->currencyPrice;
 	}
 
 	/**
-	 * @param float $currencyPrice
+	 * @param float|null $currencyPrice
 	 */
-	public function setCurrencyPrice( float $currencyPrice ): void {
+	public function setCurrencyPrice( ?float $currencyPrice ): void {
 		$this->currencyPrice = $currencyPrice;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function toArray(): array {
+		return [
+			'name'          => $this->getName(),
+			'nativeName'    => $this->getNativeName(),
+			'currencyName'  => $this->getCurrencyName(),
+			'currencyPrice' => $this->getCurrencyPrice(),
+		];
 	}
 
 

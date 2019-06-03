@@ -3,7 +3,9 @@ declare( strict_types=1 );
 
 namespace App\Controller;
 
+use App\Entity\Country;
 use App\Service\CountryService;
+use GuzzleHttp\Client;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -21,18 +23,13 @@ class CountryController extends AbstractFOSRestController {
 	 * @param string $countryName
 	 *
 	 * @return Response
+	 * @throws \GuzzleHttp\Exception\GuzzleException
 	 */
 	public function getCountryAction( string $countryName ): Response {
-		$countryService = new CountryService( $countryName );
-		
-		$data           = [
-			'name'          => $countryName,
-			'nativeName'    => $countryName,
-			'currencyName'  => $countryName,
-			'currencyPrice' => $countryName,
-		];
 
-		return $this->handleView( $this->view( $data ) );
+		$countryService = new CountryService( $countryName );
+
+		return $this->handleView( $this->view( $countryService->getBody(), $countryService->getHttpCode() ) );
 	}
 
 }
