@@ -1,10 +1,11 @@
 <?php
+declare( strict_types=1 );
 
 namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -12,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
  * Country controller.
  * @Route("/api/v1/country", name="api_")
  */
-class CountryController extends FOSRestController {
+class CountryController extends AbstractFOSRestController {
 	/**
 	 * @Rest\Get("/name/{countryName}")
 	 *
@@ -22,14 +23,12 @@ class CountryController extends FOSRestController {
 	 */
 	public function getCountryAction( string $countryName ): Response {
 
-		$data = new CountryService();
-
-		/*		$data = [
-					'name'          => $countryName,
-					'nativeName'    => $countryName,
-					'currencyName'  => $countryName,
-					'currencyPrice' => $countryName,
-				];*/
+		$data = [
+			'name'          => $countryName,
+			'nativeName'    => $countryName,
+			'currencyName'  => $countryName,
+			'currencyPrice' => $countryName,
+		];
 
 		return $this->handleView( $this->view( $data ) );
 	}
