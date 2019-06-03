@@ -7,6 +7,7 @@
 #### Response:
 ```json
 {
+    "message": "OK",
     "code": 200,
     "data": {
         "name": "Ukraine",

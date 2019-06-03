@@ -3,10 +3,7 @@ declare( strict_types=1 );
 
 namespace App\Controller;
 
-use App\Entity\Country;
 use App\Service\CountryService;
-use GuzzleHttp\Client;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -29,7 +26,7 @@ class CountryController extends AbstractFOSRestController {
 
 		$countryService = new CountryService( $countryName );
 
-		return $this->handleView( $this->view( $countryService->getBody(), $countryService->getHttpCode() ) );
+		return $this->handleView( $this->view( $countryService->getBody(), $countryService->getStatusCode() ) );
 	}
 
 }

@@ -22,7 +22,7 @@ class CountryService {
 	/**
 	 * @var int
 	 */
-	private $httpCode;
+	private $statusCode;
 
 	/**
 	 * CountryService constructor.
@@ -51,16 +51,17 @@ class CountryService {
 			$this->country->setName( $body{0}->name );
 			$this->country->setNativeName( $body{0}->nativeName );
 			$this->country->setCurrencyName( $body{0}->currencies[0]->code );
-			$this->setHttpCode( 200 );
+			$this->setMessage( $response->getReasonPhrase() );
+			$this->setStatusCode( $response->getStatusCode() );
 
 			$this->callNbp( $body{0}->currencies[0]->code );
 		} catch ( ClientException $e ) {
 			$exception = $e->getResponse();
-			$this->setHttpCode( $exception->getStatusCode() );
+			$this->setStatusCode( $exception->getStatusCode() );
 			$this->setMessage( 'Country ' . $exception->getReasonPhrase() );
 		} catch ( ServerException $e ) {
 			$exception = $e->getResponse();
-			$this->setHttpCode( $exception->getStatusCode() );
+			$this->setStatusCode( $exception->getStatusCode() );
 			$this->setMessage( $exception->getReasonPhrase() );
 		}
 	}
@@ -81,13 +82,15 @@ class CountryService {
 
 			$body = json_decode( $response->getBody()->getContents(), false );
 			$this->country->setCurrencyPrice( $body->rates[0]->mid );
+			$this->setMessage( $response->getReasonPhrase() );
+			$this->setStatusCode( $response->getStatusCode() );
 		} catch ( ClientException $e ) {
 			$exception = $e->getResponse();
-			$this->setHttpCode( $exception->getStatusCode() );
+			$this->setStatusCode( $exception->getStatusCode() );
 			$this->setMessage( 'Currency ' . $exception->getReasonPhrase() );
 		} catch ( ServerException $e ) {
 			$exception = $e->getResponse();
-			$this->setHttpCode( $exception->getStatusCode() );
+			$this->setStatusCode( $exception->getStatusCode() );
 			$this->setMessage( $exception->getReasonPhrase() );
 		}
 	}
@@ -98,37 +101,37 @@ class CountryService {
 	public function getBody(): array {
 		return [
 			'message' => $this->getMessage(),
-			'code'    => $this->getHttpCode(),
+			'code'    => $this->getStatusCode(),
 			'data'    => $this->country->toArray(),
 		];
 	}
 
 	/**
-	 * @return int
+	 * @return string
 	 */
-	public function getHttpCode(): int {
-		return $this->httpCode;
-	}
-
-	/**
-	 * @param int $httpCode
-	 */
-	public function setHttpCode( int $httpCode ): void {
-		$this->httpCode = $httpCode;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getMessage() {
+	public function getMessage(): string {
 		return $this->message;
 	}
 
 	/**
-	 * @param mixed $message
+	 * @param string $message
 	 */
-	public function setMessage( $message ): void {
+	public function setMessage( string $message ): void {
 		$this->message = $message;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getStatusCode(): int {
+		return $this->statusCode;
+	}
+
+	/**
+	 * @param int $statusCode
+	 */
+	public function setStatusCode( int $statusCode ): void {
+		$this->statusCode = $statusCode;
 	}
 
 }
