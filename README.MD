@@ -1,16 +1,21 @@
 # Symfony REST API
 
-
 ## Installation
 Install all composer dependencies
 ```bash
 composer install
 ```
-JWT
+#### JWT
 ```bash
 mkdir -p config/jwt
 openssl genrsa -out config/jwt/private.pem -aes256 4096
 openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem
+```
+Remember to add your passphrase to .env.local
+```bash
+###> lexik/jwt-authentication-bundle ###
+JWT_PASSPHRASE="YOUR_PASSPHRASE"
+###< lexik/jwt-authentication-bundle ###
 ```
 Symfony Server
 ```bash
