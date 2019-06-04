@@ -33,15 +33,18 @@ class CountryService {
 	 */
 	public function __construct( string $countryName ) {
 		$this->country = new Country();
-		$this->callRestCountries( $countryName );
+		if ( $this->callRestCountries( $countryName ) ) {
+			$this->callNbp( $this->country->getCurrencyName() );
+		}
 	}
 
 	/**
 	 * @param string $countryName
 	 *
+	 * @return bool
 	 * @throws GuzzleException
 	 */
-	private function callRestCountries( string $countryName ): void {
+	private function callRestCountries( string $countryName ): bool {
 		$client = new Client( [ 'base_uri' => 'https://restcountries.eu/rest/v2/name/' ] );
 
 		try {
@@ -54,24 +57,23 @@ class CountryService {
 			$this->setMessage( $response->getReasonPhrase() );
 			$this->setStatusCode( $response->getStatusCode() );
 
-			$this->callNbp( $body{0}->currencies[0]->code );
-		} catch ( ClientException $e ) {
+			return true;
+		} catch ( ClientException|ServerException $e ) {
 			$exception = $e->getResponse();
 			$this->setStatusCode( $exception->getStatusCode() );
 			$this->setMessage( 'Country ' . $exception->getReasonPhrase() );
-		} catch ( ServerException $e ) {
-			$exception = $e->getResponse();
-			$this->setStatusCode( $exception->getStatusCode() );
-			$this->setMessage( $exception->getReasonPhrase() );
+
+			return false;
 		}
 	}
 
 	/**
 	 * @param string $currencyName
 	 *
+	 * @return bool
 	 * @throws GuzzleException
 	 */
-	private function callNbp( string $currencyName ): void {
+	private function callNbp( string $currencyName ): bool {
 		$client = new Client( [
 			'base_uri' => 'https://api.nbp.pl/api/exchangerates/rates/A/',
 			'headers'  => [ 'Content-Type' => 'application/json', 'Accept' => 'application/json' ],
@@ -84,14 +86,14 @@ class CountryService {
 			$this->country->setCurrencyPrice( $body->rates[0]->mid );
 			$this->setMessage( $response->getReasonPhrase() );
 			$this->setStatusCode( $response->getStatusCode() );
-		} catch ( ClientException $e ) {
+
+			return true;
+		} catch ( ClientException|ServerException $e ) {
 			$exception = $e->getResponse();
 			$this->setStatusCode( $exception->getStatusCode() );
 			$this->setMessage( 'Currency ' . $exception->getReasonPhrase() );
-		} catch ( ServerException $e ) {
-			$exception = $e->getResponse();
-			$this->setStatusCode( $exception->getStatusCode() );
-			$this->setMessage( $exception->getReasonPhrase() );
+
+			return false;
 		}
 	}
 
