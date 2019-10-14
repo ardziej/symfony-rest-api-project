@@ -17,7 +17,7 @@ class CountryController extends AbstractFOSRestController {
 	/**
 	 * @Rest\Get("/name/{countryName}")
 	 *
-	 * @param string $countryName
+	 * @param  string  $countryName
 	 *
 	 * @return Response
 	 * @throws \GuzzleHttp\Exception\GuzzleException

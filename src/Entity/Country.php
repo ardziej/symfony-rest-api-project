@@ -33,7 +33,7 @@ class Country {
 	}
 
 	/**
-	 * @param string|null $name
+	 * @param  string|null  $name
 	 */
 	public function setName( ?string $name ): void {
 		$this->name = $name;
@@ -47,7 +47,7 @@ class Country {
 	}
 
 	/**
-	 * @param string|null $nativeName
+	 * @param  string|null  $nativeName
 	 */
 	public function setNativeName( ?string $nativeName ): void {
 		$this->nativeName = $nativeName;
@@ -61,7 +61,7 @@ class Country {
 	}
 
 	/**
-	 * @param string|null $currencyName
+	 * @param  string|null  $currencyName
 	 */
 	public function setCurrencyName( ?string $currencyName ): void {
 		$this->currencyName = $currencyName;
@@ -75,7 +75,7 @@ class Country {
 	}
 
 	/**
-	 * @param float|null $currencyPrice
+	 * @param  float|null  $currencyPrice
 	 */
 	public function setCurrencyPrice( ?float $currencyPrice ): void {
 		$this->currencyPrice = $currencyPrice;
@@ -92,6 +92,5 @@ class Country {
 			'currencyPrice' => $this->getCurrencyPrice(),
 		];
 	}
-
 
 }
