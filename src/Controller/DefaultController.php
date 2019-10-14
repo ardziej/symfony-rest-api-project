@@ -3,28 +3,24 @@ declare( strict_types=1 );
 
 namespace App\Controller;
 
-use App\Service\CountryService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class CountryController
+ * Class DefaultController
  * @package App\Controller
  */
-class CountryController {
+class DefaultController {
 	/**
-	 * @param  string  $countryName
-	 *
 	 * @return Response
-	 * @throws \GuzzleHttp\Exception\GuzzleException
 	 */
-	public function getCountryAction( string $countryName ): Response {
-		$countryService = new CountryService( $countryName );
-
+	public function index(): Response {
 		$responseData = [
 			'message' => 'OK',
 			'code'    => 200,
-			'data'    => $countryService->getData(),
+			'data'    => [
+				'text' => 'Hello World',
+			],
 		];
 
 		return new JsonResponse( $responseData, Response::HTTP_OK );

@@ -109,6 +109,13 @@ class CountryService {
 	}
 
 	/**
+	 * @return array
+	 */
+	public function getData(): array {
+		return $this->country->toArray();
+	}
+
+	/**
 	 * @return string
 	 */
 	public function getMessage(): string {

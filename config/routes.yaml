@@ -1,5 +1,8 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+index:
+    path: /
+    controller: App\Controller\DefaultController::index
+country:
+    path: /api/v1/country/name/{countryName}
+    controller: App\Controller\CountryController::getCountryAction
 api_login_check:
   path: /api/login_check
