@@ -10,20 +10,18 @@ use Symfony\Component\HttpFoundation\Response;
  * Class DefaultController
  * @package App\Controller
  */
-class DefaultController {
+class DefaultController extends AbstractController {
 	/**
 	 * @return Response
 	 */
 	public function index(): Response {
-		$responseData = [
-			'message' => 'OK',
-			'code'    => 200,
-			'data'    => [
-				'text' => 'Hello World',
-			],
-		];
+		$response = $this->responseFrame(
+			'OK',
+			Response::HTTP_OK,
+			[ 'message' => 'Hello World' ]
+		);
 
-		return new JsonResponse( $responseData, Response::HTTP_OK );
+		return new JsonResponse( $response, Response::HTTP_OK );
 	}
 
 }

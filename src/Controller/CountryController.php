@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Class CountryController
  * @package App\Controller
  */
-class CountryController {
+class CountryController extends AbstractController {
 	/**
 	 * @param  string  $countryName
 	 *
@@ -20,14 +20,13 @@ class CountryController {
 	 */
 	public function getCountryAction( string $countryName ): Response {
 		$countryService = new CountryService( $countryName );
+		$response       = $this->responseFrame(
+			'OK',
+			Response::HTTP_OK,
+			$countryService->getData()
+		);
 
-		$responseData = [
-			'message' => 'OK',
-			'code'    => 200,
-			'data'    => $countryService->getData(),
-		];
-
-		return new JsonResponse( $responseData, Response::HTTP_OK );
+		return new JsonResponse( $response, Response::HTTP_OK );
 	}
 
 }
