@@ -27,7 +27,7 @@ class CountryService {
 	/**
 	 * CountryService constructor.
 	 *
-	 * @param string $countryName
+	 * @param  string  $countryName
 	 *
 	 * @throws GuzzleException
 	 */
@@ -39,7 +39,7 @@ class CountryService {
 	}
 
 	/**
-	 * @param string $countryName
+	 * @param  string  $countryName
 	 *
 	 * @return bool
 	 * @throws GuzzleException
@@ -68,7 +68,7 @@ class CountryService {
 	}
 
 	/**
-	 * @param string $currencyName
+	 * @param  string  $currencyName
 	 *
 	 * @return bool
 	 * @throws GuzzleException
@@ -109,6 +109,13 @@ class CountryService {
 	}
 
 	/**
+	 * @return array
+	 */
+	public function getData(): array {
+		return $this->country->toArray();
+	}
+
+	/**
 	 * @return string
 	 */
 	public function getMessage(): string {
@@ -116,7 +123,7 @@ class CountryService {
 	}
 
 	/**
-	 * @param string $message
+	 * @param  string  $message
 	 */
 	public function setMessage( string $message ): void {
 		$this->message = $message;
@@ -130,7 +137,7 @@ class CountryService {
 	}
 
 	/**
-	 * @param int $statusCode
+	 * @param  int  $statusCode
 	 */
 	public function setStatusCode( int $statusCode ): void {
 		$this->statusCode = $statusCode;

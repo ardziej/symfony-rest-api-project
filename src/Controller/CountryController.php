@@ -4,29 +4,29 @@ declare( strict_types=1 );
 namespace App\Controller;
 
 use App\Service\CountryService;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use FOS\RestBundle\Controller\AbstractFOSRestController;
-use FOS\RestBundle\Controller\Annotations as Rest;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
- * Country controller.
- * @Route("/api/v1/country", name="api_")
+ * Class CountryController
+ * @package App\Controller
  */
-class CountryController extends AbstractFOSRestController {
+class CountryController extends AbstractController {
 	/**
-	 * @Rest\Get("/name/{countryName}")
-	 *
-	 * @param string $countryName
+	 * @param  string  $countryName
 	 *
 	 * @return Response
 	 * @throws \GuzzleHttp\Exception\GuzzleException
 	 */
 	public function getCountryAction( string $countryName ): Response {
-
 		$countryService = new CountryService( $countryName );
+		$response       = $this->responseFrame(
+			'OK',
+			Response::HTTP_OK,
+			$countryService->getData()
+		);
 
-		return $this->handleView( $this->view( $countryService->getBody(), $countryService->getStatusCode() ) );
+		return new JsonResponse( $response, Response::HTTP_OK );
 	}
 
 }
