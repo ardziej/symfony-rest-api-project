@@ -1,8 +1,10 @@
 index:
-    path: /
-    controller: App\Controller\DefaultController::index
+  path: /
+  controller: App\Controller\DefaultController::index
+  methods: GET
 country:
-    path: /api/v1/country/name/{countryName}
-    controller: App\Controller\CountryController::getCountryAction
+  path: /api/v1/country/name/{countryName}
+  controller: App\Controller\CountryController::getCountryAction
+  methods: GET
 api_login_check:
   path: /api/login_check
