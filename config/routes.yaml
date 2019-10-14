@@ -9,4 +9,4 @@ country:
   methods: GET
 
 api_login_check:
-  path: /api/login_check
+  path: /api/v1/user/login
